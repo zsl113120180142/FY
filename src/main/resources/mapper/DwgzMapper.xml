@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gannan.court.dao.DwgzMapper" >
+  <resultMap id="BaseResultMap" type="com.gannan.court.bean.Dwgz" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="categoryname" property="categoryname" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="homepage" property="homepage" jdbcType="INTEGER" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="puton" property="puton" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gannan.court.bean.Dwgz" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, category, categoryname, time, author, homepage, picture, source, link, 
+    puton
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gannan.court.bean.DwgzExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dwgz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gannan.court.bean.DwgzExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dwgz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dwgz
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dwgz
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gannan.court.bean.DwgzExample" >
+    delete from dwgz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gannan.court.bean.Dwgz" >
+    insert into dwgz (id, title, category, 
+      categoryname, time, author, 
+      homepage, picture, source, 
+      link, puton, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{categoryname,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, #{author,jdbcType=VARCHAR}, 
+      #{homepage,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{puton,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gannan.court.bean.Dwgz" >
+    insert into dwgz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="categoryname != null" >
+        categoryname,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="homepage != null" >
+        homepage,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="puton != null" >
+        puton,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryname != null" >
+        #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="homepage != null" >
+        #{homepage,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="puton != null" >
+        #{puton,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gannan.court.bean.DwgzExample" resultType="java.lang.Integer" >
+    select count(*) from dwgz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dwgz
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryname != null" >
+        categoryname = #{record.categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=DATE},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homepage != null" >
+        homepage = #{record.homepage,jdbcType=INTEGER},
+      </if>
+      <if test="record.picture != null" >
+        picture = #{record.picture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.link != null" >
+        link = #{record.link,jdbcType=VARCHAR},
+      </if>
+      <if test="record.puton != null" >
+        puton = #{record.puton,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update dwgz
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      categoryname = #{record.categoryname,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=DATE},
+      author = #{record.author,jdbcType=VARCHAR},
+      homepage = #{record.homepage,jdbcType=INTEGER},
+      picture = #{record.picture,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      link = #{record.link,jdbcType=VARCHAR},
+      puton = #{record.puton,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dwgz
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      categoryname = #{record.categoryname,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=DATE},
+      author = #{record.author,jdbcType=VARCHAR},
+      homepage = #{record.homepage,jdbcType=INTEGER},
+      picture = #{record.picture,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      link = #{record.link,jdbcType=VARCHAR},
+      puton = #{record.puton,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gannan.court.bean.Dwgz" >
+    update dwgz
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryname != null" >
+        categoryname = #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="homepage != null" >
+        homepage = #{homepage,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="puton != null" >
+        puton = #{puton,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gannan.court.bean.Dwgz" >
+    update dwgz
+    set title = #{title,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      categoryname = #{categoryname,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      author = #{author,jdbcType=VARCHAR},
+      homepage = #{homepage,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      puton = #{puton,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gannan.court.bean.Dwgz" >
+    update dwgz
+    set title = #{title,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      categoryname = #{categoryname,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      author = #{author,jdbcType=VARCHAR},
+      homepage = #{homepage,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      puton = #{puton,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
